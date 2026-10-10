@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
+import Home from "./pages/Home.jsx";
 import Tools from "./pages/Tools.jsx";
 import WhatsApp from "./pages/WhatsApp.jsx";
 import QR from "./pages/QR.jsx";
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
         <Route path="/tools" element={<Tools />} />
         <Route path="/whatsapp" element={<WhatsApp />} />
         <Route path="/qr" element={<QR />} />

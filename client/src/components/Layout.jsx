@@ -3,13 +3,11 @@ import { useEffect, useState } from "react";
 import Logo from "./Logo.jsx";
 import { getToken, setToken } from "../lib/api.js";
 
+const DEMO = "https://wa.me/917290093333?text=" + encodeURIComponent("Hi, I'd like a Smart CRM demo.");
 const links = [
-  { to: "/tools", label: "All Tools" },
-  { to: "/whatsapp", label: "WhatsApp" },
-  { to: "/qr", label: "QR Code" },
-  { to: "/card", label: "Visiting Card" },
-  { to: "/follow-hub", label: "Follow Hub" },
-  { to: "/pricing", label: "Pricing" },
+  { href: "/#features", label: "Features" },
+  { href: "/#pricing", label: "Pricing" },
+  { to: "/tools", label: "Free Tools" },
 ];
 
 export default function Layout() {
@@ -27,11 +25,14 @@ export default function Layout() {
           <Logo />
           <nav className="hidden items-center gap-1 md:flex">
             {links.map((l) => (
-              <NavLink key={l.to} to={l.to}
-                className={({ isActive }) =>
-                  `rounded-lg px-3 py-2 text-sm font-semibold transition ${isActive ? "text-violet" : "text-slate-600 hover:text-ink"}`}>
-                {l.label}
-              </NavLink>
+              l.to ? (
+                <NavLink key={l.label} to={l.to}
+                  className={({ isActive }) => `rounded-lg px-3 py-2 text-sm font-semibold transition ${isActive ? "text-violet" : "text-slate-600 hover:text-ink"}`}>
+                  {l.label}
+                </NavLink>
+              ) : (
+                <a key={l.label} href={l.href} className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-ink">{l.label}</a>
+              )
             ))}
           </nav>
           <div className="flex items-center gap-2">
@@ -43,7 +44,7 @@ export default function Layout() {
             ) : (
               <>
                 <Link to="/login" className="hidden text-sm font-semibold text-slate-600 hover:text-ink sm:block">Login</Link>
-                <Link to="/signup" className="btn-brand text-sm">Get started</Link>
+                <a href={DEMO} target="_blank" rel="noreferrer" className="btn-brand text-sm">Request Demo</a>
               </>
             )}
             <button className="md:hidden text-2xl leading-none text-slate-600" onClick={() => setOpen((v) => !v)}>≡</button>
@@ -52,8 +53,13 @@ export default function Layout() {
         {open && (
           <div className="border-t border-slate-200 bg-white px-4 py-2 md:hidden">
             {links.map((l) => (
-              <Link key={l.to} to={l.to} onClick={() => setOpen(false)}
-                className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-700">{l.label}</Link>
+              l.to ? (
+                <Link key={l.label} to={l.to} onClick={() => setOpen(false)}
+                  className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-700">{l.label}</Link>
+              ) : (
+                <a key={l.label} href={l.href} onClick={() => setOpen(false)}
+                  className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-700">{l.label}</a>
+              )
             ))}
           </div>
         )}
