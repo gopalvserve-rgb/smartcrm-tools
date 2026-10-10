@@ -5,7 +5,6 @@ import { getToken, setToken } from "../lib/api.js";
 
 const DEMO = "https://wa.me/917290093333?text=" + encodeURIComponent("Hi, I'd like a Smart CRM demo.");
 const links = [
-  { href: "/#features", label: "Features" },
   { href: "/#pricing", label: "Pricing" },
   { to: "/tools", label: "Free Tools" },
 ];

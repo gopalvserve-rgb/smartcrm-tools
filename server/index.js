@@ -40,6 +40,12 @@ app.use("/api/admin", adminRoutes);
 
 // Serve the built React client
 const clientDir = path.join(__dirname, "..", "client", "dist");
+
+// Homepage = the SmartCRM marketing landing (original HTML). Tools app lives under /tools etc.
+app.get("/", (_req, res, next) => {
+  res.sendFile(path.join(clientDir, "landing.html"), (err) => { if (err) next(); });
+});
+
 app.use(express.static(clientDir));
 app.get("*", (req, res, next) => {
   if (req.path.startsWith("/api/")) return next();
