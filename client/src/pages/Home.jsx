@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
+import AnimatedHero from "../components/AnimatedHero.jsx";
 
 const tools = [
   { to: "/whatsapp", icon: "💬", name: "WhatsApp Direct", desc: "Chat to any number without saving it. Get a wa.me link + QR." },
@@ -11,26 +12,8 @@ const tools = [
 export default function Home() {
   return (
     <div>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="float-orb -left-24 -top-28 h-80 w-80 bg-violet" style={{ animation: "floaty 13s ease-in-out infinite" }} />
-        <div className="float-orb right-0 -top-20 h-72 w-72 bg-cyan" style={{ animation: "floaty 16s ease-in-out infinite" }} />
-        <div className="relative mx-auto max-w-5xl px-4 pb-10 pt-16 text-center">
-          <Reveal>
-            <span className="pill bg-white shadow-soft text-violet">✦ Free business tools by SmartCRM</span>
-            <h1 className="mx-auto mt-5 max-w-3xl text-4xl font-black leading-[1.1] tracking-tight text-ink sm:text-6xl">
-              Small tools that get you <span className="gradient-text">more customers</span>
-            </h1>
-            <p className="mx-auto mt-5 max-w-xl text-lg text-slate-500">
-              WhatsApp links, QR codes, visiting cards and more — ready in seconds. Free to use, and every lead flows into SmartCRM.
-            </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Link to="/whatsapp" className="btn-brand">Try a tool free</Link>
-              <Link to="/pricing" className="btn-ghost">See Pro</Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* Animated hero */}
+      <AnimatedHero />
 
       {/* Tools grid */}
       <section className="mx-auto max-w-5xl px-4 py-10">
