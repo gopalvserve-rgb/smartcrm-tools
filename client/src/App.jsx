@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
 import Tools from "./pages/Tools.jsx";
+import ComingSoon from "./pages/ComingSoon.jsx";
 import WhatsApp from "./pages/WhatsApp.jsx";
 import QR from "./pages/QR.jsx";
 import Card from "./pages/Card.jsx";
@@ -19,6 +20,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/tools" element={<Tools />} />
+        <Route path="/t/:slug" element={<ComingSoon />} />
         <Route path="/whatsapp" element={<WhatsApp />} />
         <Route path="/qr" element={<QR />} />
         <Route path="/card" element={<Card />} />

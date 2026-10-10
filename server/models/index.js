@@ -28,6 +28,8 @@ const ToolSchema = new Schema(
     name: String,
     icon: String,
     tagline: String,
+    href: String, // route to open this tool
+    comingSoon: { type: Boolean, default: false },
     status: { type: String, enum: ["live", "draft"], default: "live" },
     order: { type: Number, default: 0 },
   },

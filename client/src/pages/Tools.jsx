@@ -1,14 +1,22 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
-
-const tools = [
-  { to: "/whatsapp", icon: "💬", name: "WhatsApp Direct", desc: "Chat to any number without saving it. Get a wa.me link + QR." },
-  { to: "/qr", icon: "🔳", name: "QR Code Generator", desc: "QR for a URL, UPI, text or WhatsApp — with custom colors." },
-  { to: "/card", icon: "🪪", name: "Visiting Card Maker", desc: "A digital business card with a shareable link + QR." },
-  { to: "/follow-hub", icon: "🔗", name: "Social Follow Hub", desc: "All your social links on one branded page + QR." },
-];
+import { api } from "../lib/api.js";
 
 export default function Tools() {
+  const [tools, setTools] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.tools()
+      .then((r) => setTools(r.tools || []))
+      .catch(() => setTools([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const live = tools.filter((t) => !t.comingSoon);
+  const soon = tools.filter((t) => t.comingSoon);
+
   return (
     <div>
       {/* Compact header */}
@@ -28,28 +36,52 @@ export default function Tools() {
         </div>
       </section>
 
-      {/* Tools grid */}
       <section className="mx-auto max-w-5xl px-4 py-10">
-        <div className="grid gap-4 sm:grid-cols-2">
-          {tools.map((t, i) => (
-            <Reveal key={t.to} delay={i * 70}>
-              <Link to={t.to}
-                className="card group block p-6 transition duration-300 hover:-translate-y-1 hover:shadow-glow hover:border-violet/40">
-                <div className="flex items-start gap-4">
-                  <span className="grid h-12 w-12 flex-none place-items-center rounded-xl bg-slate-50 text-2xl">{t.icon}</span>
-                  <div>
-                    <h3 className="text-lg font-bold text-ink">{t.name}</h3>
-                    <p className="mt-1 text-sm text-slate-500">{t.desc}</p>
-                    <span className="mt-3 inline-block text-sm font-semibold text-violet">Open tool →</span>
-                  </div>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-center text-slate-400">Loading tools…</p>
+        ) : (
+          <>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {live.map((t, i) => <ToolCard key={t.slug} t={t} i={i} />)}
+            </div>
 
-        <p className="mt-8 text-center text-sm text-slate-400">Aur tools jaldi aa rahe hain — Invoice maker, Link-in-bio, Review collector…</p>
+            {soon.length > 0 && (
+              <>
+                <div className="mt-12 mb-5 flex items-center gap-3">
+                  <h2 className="text-lg font-extrabold text-ink">Coming soon</h2>
+                  <span className="h-px flex-1 bg-slate-200" />
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {soon.map((t, i) => <ToolCard key={t.slug} t={t} i={i} />)}
+                </div>
+              </>
+            )}
+          </>
+        )}
       </section>
     </div>
+  );
+}
+
+function ToolCard({ t, i }) {
+  return (
+    <Reveal delay={(i % 3) * 70}>
+      <Link to={t.href || "/tools"}
+        className="card group relative block p-6 transition duration-300 hover:-translate-y-1 hover:shadow-glow hover:border-violet/40">
+        {t.comingSoon && (
+          <span className="pill absolute right-4 top-4 bg-amber-100 text-amber-700 text-[10px]">Soon</span>
+        )}
+        <div className="flex items-start gap-4">
+          <span className="grid h-12 w-12 flex-none place-items-center rounded-xl bg-slate-50 text-2xl">{t.icon}</span>
+          <div>
+            <h3 className="text-lg font-bold text-ink">{t.name}</h3>
+            <p className="mt-1 text-sm text-slate-500">{t.tagline}</p>
+            <span className="mt-3 inline-block text-sm font-semibold text-violet">
+              {t.comingSoon ? "Get notified →" : "Open tool →"}
+            </span>
+          </div>
+        </div>
+      </Link>
+    </Reveal>
   );
 }
