@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background: #f6f7fb;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .btn, .btn-brand, .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 font-semibold transition
+           active:scale-[.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-brand { @apply text-white bg-brand shadow-glow hover:brightness-105; }
+  .btn-ghost { @apply bg-white border border-slate-200 text-ink hover:border-violet; }
+  .input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-ink outline-none
+           transition focus:border-violet focus:ring-2;
+  }
+  .label { @apply block text-sm font-semibold text-ink mb-1.5; }
+  .card { @apply rounded-2xl bg-white border border-slate-200 shadow-soft; }
+  .pill { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold; }
+  .gradient-text { @apply bg-brand bg-clip-text text-transparent; }
+}
+
+.reveal { opacity: 0; transform: translateY(18px); transition: .6s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+
+.float-orb { position: absolute; border-radius: 9999px; filter: blur(60px); opacity: .5; pointer-events: none; z-index: 0; }
+@keyframes floaty { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,24px)} }
