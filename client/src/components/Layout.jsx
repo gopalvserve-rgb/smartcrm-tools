@@ -4,6 +4,7 @@ import Logo from "./Logo.jsx";
 import { getToken, setToken } from "../lib/api.js";
 
 const links = [
+  { to: "/tools", label: "All Tools" },
   { to: "/whatsapp", label: "WhatsApp" },
   { to: "/qr", label: "QR Code" },
   { to: "/card", label: "Visiting Card" },
